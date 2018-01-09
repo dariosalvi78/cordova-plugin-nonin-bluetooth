@@ -1,11 +1,24 @@
-## Cordova Plugin for Nonin pulse oximeters
+## Cordova Plugin for Nonin Bluetooth (not BLE)  pulse oximeters
 
-**Only works in Android for the moment**
+**Only works with Android**
+
+## Platform and device support
+
+Android only. Compatible with Nonin BlueTooth models: Onyx II (Model 9560) and WristOx2 (Model 3150).
+
+It works over Bluetooth Serial Port Profile (SPP).
+It only implements "Serial Data Format #7" mode.
+This mode provides continuous data transmission of a data packet sent 75 times per second.
+The data packet includes real-time data including: 8-bit waveform value, six different output options for the SpO2 value,
+four different averaging options for the pulse rate values, and options formatted for both
+recording and display purposes, as well as status information for the measurement and status of the battery.
+
+Protocol details are [on the manufacturers web site](http://www.nonin.com/documents/6470_ENG.pdf). 
 
 ## Install
 
 ```
-cordova plugin add https://ibme-gitcvs.eng.ox.ac.uk/mhealth/cordova-plugin-nonin.git
+cordova plugin add cordova-plugin-nonin-bluetooth
 ```
 
 ## Programming interface
@@ -38,7 +51,7 @@ If the user denies switching on the BlueTooth, no successCallback is called. You
 ### isPaired
 
 Tells if a given address is in the list of paired devices.
-The BlueTooth adapter must be on to work.
+The BlueTooth interface must be on to work.
 
 ```js
 nonin.isPaired(address, successCallback, failureCallback);
@@ -56,7 +69,7 @@ The BlueTooth adapter must be on to work.
 var successHandler = function (data) {
     // data.spo2; -> blood saturation
     // data.hr; -> heart rate
-    // data.timestamp; -> ms since 1970
+    // data.timestamp; -> ms since 1/1/1970
     // data.hasArtifacts; -> true if the signal has artifacts (low quality)
     // data.hasSustainedArtifacts; -> true if the signal has sustained artifacts (even lower quality)
     // data.nofinger; -> true if the finger was removed from the device
@@ -79,7 +92,3 @@ nonin.stop(successCallback, failureCallback);
 ```
 - => `successCallback` is called if stopped
 - => `failureCallback` is called if there was an error
-
-## Platform and device support
-
-Android only. Compatible with Nonin BlueTooth models: Onyx II, Wrist OX2.

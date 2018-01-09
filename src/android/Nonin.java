@@ -4,7 +4,7 @@
  * @author Carmelo Velardo, Dario Salvi, Arvind Raghu, Oliver Gibson
  */
 
-package uk.ac.ox.ibme.nonin;
+package org.apache.cordova.nonin;
 
 
 import java.io.BufferedInputStream;

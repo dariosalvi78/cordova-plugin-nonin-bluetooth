@@ -1,10 +1,10 @@
 {
-  "name": "cordova-plugin-nonin",
-  "version": "0.0.1",
+  "name": "cordova-plugin-nonin-bluetooth",
+  "version": "0.1.1",
   "author":  {
     "name": "Dario Salvi"
   },
-  "description": "Plugin for accessing the Nonin pulse oximeters via Bluetooth",
+  "description": "Plugin for accessing Nonin pulse oximeters via old Bluetooth",
   "cordova": {
     "id": "cordova-plugin-nonin",
     "platforms": [
@@ -15,7 +15,7 @@
   "deprecated": false,
   "repository": {
     "type": "git",
-    "url": "https://ibme-gitcvs.eng.ox.ac.uk/mhealth/cordova-plugin-nonin.git"
+    "url": "https://github.com/dariosalviwork/cordova-plugin-nonin-bluetooth"
   },
   "keywords": [
     "cordova",
@@ -31,9 +31,9 @@
       }
     }
   },
-  "license": "Proprietary",
+  "license": "MIT",
   "bugs": {
-    "url": "https://ibme-gitcvs.eng.ox.ac.uk/mhealth/cordova-plugin-nonin/issues"
+    "url": "https://github.com/dariosalviwork/cordova-plugin-nonin-bluetooth/issues"
   },
-  "homepage": "https://ibme-gitcvs.eng.ox.ac.uk/mhealth/cordova-plugin-nonin"
+  "homepage": "https://github.com/dariosalviwork/cordova-plugin-nonin-bluetooth"
 }

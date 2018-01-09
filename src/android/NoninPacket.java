@@ -1,4 +1,4 @@
-package uk.ac.ox.ibme.nonin;
+package org.apache.cordova.nonin;
 
 import java.io.Serializable;
 
