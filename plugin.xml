@@ -8,13 +8,14 @@
     <engines>
         <engine name="cordova" version=">=3.0.0" />
     </engines>
-    <js-module src="www/nonin.js" name="Nonin">
-        <clobbers target="nonin" />
-    </js-module>
 
     <!-- android -->
     <platform name="android">
 
+	    <js-module src="www/android/nonin.js" name="Nonin">
+			<clobbers target="nonin" />
+		</js-module>
+	
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Nonin">
                 <param name="android-package" value="org.apache.cordova.nonin.NoninPlugin"/>
@@ -31,5 +32,13 @@
         <source-file src="src/android/NoninFrame.java" target-dir="src/org/apache/cordova/nonin" />
         <source-file src="src/android/NoninPacket.java" target-dir="src/org/apache/cordova/nonin" />
 
+    </platform>
+	
+	<platform name="browser">
+	
+		<js-module src="www/browser/nonin.js" name="Nonin">
+			<clobbers target="nonin" />
+		</js-module>
+		
     </platform>
 </plugin>
