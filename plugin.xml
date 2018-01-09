@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-nonin" version="0.0.1">
+    <name>Nonin Oximeter Plugin</name>
+    <author>Dario Salvi</author>
+    <description>Plugin for accessing the Nonin pulse oximeters via Bluetooth</description>
+    <keywords>cordova, nonin, pulse-oximeter, heart-rate, spo2</keywords>
+    <license>Proprietary (for the moment)</license>
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+    <js-module src="www/nonin.js" name="Nonin">
+        <clobbers target="nonin" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Nonin">
+                <param name="android-package" value="uk.ac.ox.ibme.nonin.NoninPlugin"/>
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+          <uses-permission android:name="android.permission.BLUETOOTH" />
+          <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+        </config-file>
+
+        <source-file src="src/android/NoninPlugin.java" target-dir="src/uk/ac/ox/ibme/nonin" />
+        <source-file src="src/android/Nonin.java" target-dir="src/uk/ac/ox/ibme/nonin" />
+        <source-file src="src/android/NoninFrame.java" target-dir="src/uk/ac/ox/ibme/nonin" />
+        <source-file src="src/android/NoninPacket.java" target-dir="src/uk/ac/ox/ibme/nonin" />
+
+    </platform>
+</plugin>

@@ -1,0 +1,39 @@
+{
+  "name": "cordova-plugin-nonin",
+  "version": "0.0.1",
+  "author":  {
+    "name": "Dario Salvi"
+  },
+  "description": "Plugin for accessing the Nonin pulse oximeters via Bluetooth",
+  "cordova": {
+    "id": "cordova-plugin-nonin",
+    "platforms": [
+      "android"
+    ]
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "repository": {
+    "type": "git",
+    "url": "https://ibme-gitcvs.eng.ox.ac.uk/mhealth/cordova-plugin-nonin.git"
+  },
+  "keywords": [
+    "cordova",
+    "nonin",
+    "pulse-oximeter",
+    "heart-rate",
+    "spo2"
+  ],
+  "engines": {
+    "cordovaDependencies": {
+      "2.0.0": {
+        "cordova": ">100"
+      }
+    }
+  },
+  "license": "Proprietary",
+  "bugs": {
+    "url": "https://ibme-gitcvs.eng.ox.ac.uk/mhealth/cordova-plugin-nonin/issues"
+  },
+  "homepage": "https://ibme-gitcvs.eng.ox.ac.uk/mhealth/cordova-plugin-nonin"
+}
