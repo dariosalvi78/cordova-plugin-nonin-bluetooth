@@ -67,13 +67,18 @@ The BlueTooth adapter must be on to work.
 
 ```js
 var successHandler = function (data) {
-    // data.spo2; -> blood saturation
-    // data.hr; -> heart rate
-    // data.timestamp; -> ms since 1/1/1970
-    // data.hasArtifacts; -> true if the signal has artifacts (low quality)
-    // data.hasSustainedArtifacts; -> true if the signal has sustained artifacts (even lower quality)
-    // data.nofinger; -> true if the finger was removed from the device
-    // data.batterylow; -> true if batteries are low
+     // data.spo2 -> blood saturation (avg over 4 pulses)
+     // data.instantSpo2 -> instantaneous (non averaged) spo2
+     // data.hr -> heart rate (avg over 4 pulses)
+     // data.timestamp -> ms since 1970
+     // data.timer -> internal device timer
+     // data.hasArtifacts -> true if the signal has artifacts (low quality)
+     // data.hasSustainedArtifacts -> true if the signal has sustained artifacts (even lower quality)
+     // data.nofinger -> true if the finger was removed from the device
+     // data.batterylow -> true if batteries are low
+     // data.sensorAlarm -> true if data is unusable
+     // data.smartPoint -> true if very precise measurement
+     // data.PPG -> array of PPG samples
 };
 nonin.start(address, successCallback, failureCallback);
 ```

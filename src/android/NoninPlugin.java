@@ -99,21 +99,35 @@ public class NoninPlugin extends CordovaPlugin {
                 @Override
                 public void handle(final NoninPacket packet) {
                     JSONObject r = new JSONObject();
-                    // data.spo2; -> blood saturation
-                    // data.hr; -> heart rate
-                    // data.timestamp; -> ms since 1970
-                    // data.hasArtifacts; -> true if the signal has artifacts (low quality)
-                    // data.hasSustainedArtifacts; -> true if the signal has sustained artifacts (even lower quality)
-                    // data.nofinger; -> true if the finger was removed from the device
-                    // data.batterylow; -> true if batteries are low
+                    // data.spo2 -> blood saturation (avg over 4 pulses)
+                    // data.instantSpo2 -> instantaneous (non averaged) spo2
+                    // data.hr -> heart rate (avg over 4 pulses)
+                    // data.timestamp -> ms since 1970
+                    // data.timer -> internal device timer
+                    // data.hasArtifacts -> true if the signal has artifacts (low quality)
+                    // data.hasSustainedArtifacts -> true if the signal has sustained artifacts (even lower quality)
+                    // data.nofinger -> true if the finger was removed from the device
+                    // data.batterylow -> true if batteries are low
+                    // data.sensorAlarm -> true if data is unusable
+                    // data.smartPoint -> true if very precise measurement
+                    // data.PPG -> array of PPG samples
                     try {
-                        r.put("spo2", packet.getDisplayedSpO2Average());
-                        r.put("hr", packet.getDisplayedHRAverage());
+                        r.put("spo2", packet.getSpO2Average());
+                        r.put("instantSpo2", packet.getBeatToBeatSpO2());
+                        r.put("hr", packet.getHRAverage());
                         r.put("timestamp", System.currentTimeMillis());
+                        r.put("timer", packet.getTimer());
                         r.put("hasArtifacts", packet.hasAnyArtifact());
                         r.put("hasSustainedArtifacts", packet.hasAnyOutOfTrack());
                         r.put("nofinger", packet.hasAnySensorAlarm());
                         r.put("batterylow", packet.isBatteryLow());
+                        r.put("sensorAlarm", packet.hasAnySensorAlarm());
+                        r.put("smartPoint", packet.isSmartPointMeasurement());
+                        JSONArray ppgsamples = new JSONArray();
+                        for(int s : packet.getPlethSamples()) {
+                            ppgsamples.put(s);
+                        }
+                        r.put("PPG", ppgsamples);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
