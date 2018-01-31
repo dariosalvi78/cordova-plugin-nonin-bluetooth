@@ -5,6 +5,10 @@ var Nonin = function () {
     this.name = "Nonin";
 };
 
+Nonin.prototype.askPermissions = function (onSuccess, onError) {
+    exec(onSuccess, onError, "Nonin", "askPermissions", []);
+};
+
 Nonin.prototype.isBTON = function (onSuccess, onError) {
     exec(onSuccess, onError, "Nonin", "isBTON", []);
 };

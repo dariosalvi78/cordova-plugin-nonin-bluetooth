@@ -13,7 +13,7 @@ The data packet includes real-time data including: 8-bit waveform value, six dif
 four different averaging options for the pulse rate values, and options formatted for both
 recording and display purposes, as well as status information for the measurement and status of the battery.
 
-Protocol details are [on the manufacturers web site](http://www.nonin.com/documents/6470_ENG.pdf). 
+Protocol details are [on the manufacturers web site](http://www.nonin.com/documents/6470_ENG.pdf).
 
 ## Install
 
@@ -25,6 +25,17 @@ cordova plugin add cordova-plugin-nonin-bluetooth
 
 Before using it, the user must have paired the device with Android and must know the BlueTooth address
 You **do not** need to reference any JavaScript, the Cordova plugin architecture will add a nonin object to your root automatically when you build.
+
+### askPermissions
+
+Asks for needed permissions
+
+```js
+nonin.askPermissions(successCallback, failureCallback);
+```
+- => `successCallback` is called when permissions are granted
+- => `failureCallback` is called if there was an error or permissions were not granted
+
 
 ### isBTON
 

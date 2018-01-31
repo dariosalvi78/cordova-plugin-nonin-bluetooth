@@ -2,22 +2,30 @@ package org.apache.cordova.nonin;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.LOG;
+import org.apache.cordova.PermissionHelper;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.BLUETOOTH;
+import static android.Manifest.permission.BLUETOOTH_ADMIN;
 
 public class NoninPlugin extends CordovaPlugin {
 
@@ -26,6 +34,7 @@ public class NoninPlugin extends CordovaPlugin {
     private Nonin device;
     private CallbackContext callbackContext;
     private Activity activity;
+    private final int PERMISSIONS_REQUEST = 142;
 
     /**
      * Sets the context of the Command.
@@ -37,7 +46,21 @@ public class NoninPlugin extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         this.activity = cordova.getActivity();
-        adapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothManager bluetoothManager = (BluetoothManager) activity.getSystemService(Context.BLUETOOTH_SERVICE);
+        adapter = bluetoothManager.getAdapter();
+    }
+
+    /* @Override */
+    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST) {
+            for(int result:grantResults) {
+                if(result == PackageManager.PERMISSION_DENIED) {
+                    this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Permissions denied"));
+                    return;
+                }
+            }
+            this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Permissions granted"));
+        }
     }
 
     /**
@@ -51,7 +74,16 @@ public class NoninPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) {
         this.callbackContext = callbackContext;
 
-        if (action.equalsIgnoreCase("isBTON")) {
+        if (action.equalsIgnoreCase("askPermissions")) {
+            if(!PermissionHelper.hasPermission(this, ACCESS_COARSE_LOCATION) ||
+                    !PermissionHelper.hasPermission(this, BLUETOOTH) ||
+                    !PermissionHelper.hasPermission(this, BLUETOOTH_ADMIN)) {
+               PermissionHelper.requestPermissions(this, PERMISSIONS_REQUEST, new String[] { ACCESS_COARSE_LOCATION, BLUETOOTH, BLUETOOTH_ADMIN });
+            } else {
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
+            }
+            return true;
+        } else if (action.equalsIgnoreCase("isBTON")) {
             boolean r = adapter.isEnabled();
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, r));
             return true;
